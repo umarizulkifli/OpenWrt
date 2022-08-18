@@ -16,7 +16,7 @@
 - 项目使用 Github Actions 拉取 [Lean](https://github.com/coolsnowwolf/lede) 的 `Openwrt` 源码仓库进行云编译
 - 设置定时自动编译（北京时间每天早上6点左右自动触发编译）
 - 固件默认 IP 地址：`192.168.1.1` 默认密码：`password`
-- 适配的软路由设备有：`X86_64`、`NanoPi_R2S`、`NanoPi_R4S`
+- 适配的软路由设备有：`X86_64`、`NanoPi_R2S`、`NanoPi_R4S`、`R68S`
 - 适配的 ARM 盒子设备有：`微加云`、`贝壳云`、`我家云`、`斐讯N1`、`章鱼星球`、`S905x3`（包括常见的 `HK1`、`H96`、`X96` 等盒子）、`S922x`（目前支持 `GT-King`、`GT-King Pro`、`Odroid N2` 三款盒子）
 - ARM 盒子固件分为 [Mini版](https://github.com/haiibo/OpenWrt/releases/tag/ARMv8_MINI) 和 [Plus版](https://github.com/haiibo/OpenWrt/releases/tag/ARMv8_PLUS)，Mini 精简版适合科学上网为主要需求的用户，Plus 多功能版插件多适合喜欢折腾的用户
 - 仓库编译的固件插件均为最新版本，最新版意味着可能有 BUG，如果之前使用稳定，则无需追新
@@ -55,7 +55,7 @@
 </details>
 
 <details>
-<summary><b>&nbsp;X86、R2S、R4S 软路由插件预览</b></summary>
+<summary><b>&nbsp;X86、R2S、R4S 等软路由插件预览</b></summary>
 <br/>
 <details>
 <summary><b>├── 状态</b></summary>
