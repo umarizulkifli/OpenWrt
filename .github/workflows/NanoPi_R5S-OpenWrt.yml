@@ -6,7 +6,7 @@
 # https://github.com/P3TERX
 #===============================================
 
-name: NanoPi_R2S OpenWrt
+name: NanoPi_R5S OpenWrt
 
 on:
   repository_dispatch:
@@ -17,12 +17,13 @@ on:
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
-  CONFIG_FILE: configs/r2s.config
+  CONFIG_FILE: configs/r5s.config
+  EXTRA_CONFIG: configs/extra.config
   DIY_SCRIPT: diy-script.sh
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: false
   UPLOAD_RELEASE: true
-  FILE_NAME: NanoPi_R2S
+  FILE_NAME: NanoPi_R5S
   TZ: Asia/Shanghai
 
 jobs:
@@ -87,6 +88,7 @@ jobs:
       run: |
         [ -e files ] && mv files openwrt/files
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
+        cat $EXTRA_CONFIG >> openwrt/.config
         chmod +x $DIY_SCRIPT
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_SCRIPT
@@ -154,8 +156,8 @@ jobs:
         tag: ${{ env.FILE_NAME }}
         token: ${{ secrets.GITHUB_TOKEN }}
         body: |
-          **This is OpenWrt firmware for NanoPi_R2S**
-          * 这是 NanoPi_R2S 使用的 OpenWrt 固件
+          **This is OpenWrt firmware for NanoPi_R5S**
+          * 这是 NanoPi_R5S 使用的 OpenWrt 固件
           默认 IP：192.168.1.1 默认密码：password
           当前使用版本:【编译前的最后一次[➦主源码](https://github.com/coolsnowwolf/lede)更新记录】
           ${{ env.useVersionInfo }}
