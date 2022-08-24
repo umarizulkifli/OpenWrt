@@ -6,18 +6,18 @@
 # https://github.com/P3TERX
 #===============================================
 
-name: ARMv8_Mini OpenWrt
+name: ARMv8 Mini OpenWrt
 
 on:
   repository_dispatch:
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '0 23 * * *'
 
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
-  CONFIG_FILE: configs/armv8_mini.config
+  CONFIG_FILE: configs/armv8-mini.config
   DIY_SCRIPT: diy-mini.sh
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: false

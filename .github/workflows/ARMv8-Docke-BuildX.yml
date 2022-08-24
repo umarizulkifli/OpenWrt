@@ -17,7 +17,7 @@ on:
         required: false
         default: "summary/openwrt-aarch64"
   schedule:
-    - cron: '30 20 * * 6'
+    - cron: '30 16 * * 5'
 
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
