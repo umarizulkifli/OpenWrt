@@ -9,7 +9,6 @@
 name: ARMv8 Package
 
 on:
-  repository_dispatch:
   workflow_dispatch:
   schedule:
     - cron: '0 15 * * *'
@@ -42,7 +41,7 @@ jobs:
       run: |
         sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
         sudo -E apt-get -qq update
-        sudo -E apt-get -qq install $(curl -fsSL https://is.gd/depends_ubuntu_2204)
+        sudo -E apt-get -qq install $(curl -fsSL is.gd/depends_ubuntu_2204)
         sudo -E apt-get -qq autoremove --purge
         sudo -E apt-get -qq clean
         sudo timedatectl set-timezone "$TZ"
@@ -72,13 +71,13 @@ jobs:
 
     - name: Upload artifact to actions
       uses: kittaakos/upload-artifact-as-is@master
-      if: env.PACKAGED_STATUS == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
+      if: env.PACKAGED_STATUS == 'success' && env.UPLOAD_FIRMWARE == 'true'
       with:
         path: ${{ env.PACKAGED_OUTPUTPATH }}
 
     - name: Upload openwrt to release
-      uses: ncipollo/release-action@v1
-      if: env.PACKAGED_STATUS == 'success' && env.UPLOAD_RELEASE == 'true' && !cancelled()
+      uses: ncipollo/release-action@main
+      if: env.PACKAGED_STATUS == 'success' && env.UPLOAD_RELEASE == 'true'
       with:
         name: R${{ env.DATE }} for ARMv8_${{ env.VERSION }}
         artifacts: ${{ env.PACKAGED_OUTPUTPATH }}/*
@@ -96,7 +95,7 @@ jobs:
           ${{ env.useVersionInfo }}
 
   Package-for-Plus:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     if: github.event.repository.owner.id == github.event.sender.id
 
     env:
@@ -113,7 +112,7 @@ jobs:
       run: |
         sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
         sudo -E apt-get -qq update
-        sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-2004)
+        sudo -E apt-get -qq install $(curl -fsSL is.gd/depends_ubuntu_2204)
         sudo -E apt-get -qq autoremove --purge
         sudo -E apt-get -qq clean
         sudo timedatectl set-timezone "$TZ"
@@ -143,13 +142,13 @@ jobs:
 
     - name: Upload artifact to actions
       uses: kittaakos/upload-artifact-as-is@master
-      if: env.PACKAGED_STATUS == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
+      if: env.PACKAGED_STATUS == 'success' && env.UPLOAD_FIRMWARE == 'true'
       with:
         path: ${{ env.PACKAGED_OUTPUTPATH }}
 
     - name: Upload openwrt to release
-      uses: ncipollo/release-action@v1
-      if: env.PACKAGED_STATUS == 'success' && env.UPLOAD_RELEASE == 'true' && !cancelled()
+      uses: ncipollo/release-action@main
+      if: env.PACKAGED_STATUS == 'success' && env.UPLOAD_RELEASE == 'true'
       with:
         name: R${{ env.DATE }} for ARMv8_${{ env.VERSION }}
         artifacts: ${{ env.PACKAGED_OUTPUTPATH }}/*
