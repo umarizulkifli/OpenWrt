@@ -9,7 +9,6 @@
 name: ARMv8 Mini OpenWrt
 
 on:
-  repository_dispatch:
   workflow_dispatch:
   schedule:
     - cron: '0 23 * * *'
@@ -39,16 +38,14 @@ jobs:
         DEBIAN_FRONTEND: noninteractive
       run: |
         docker rmi $(docker images -q)
-        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /etc/mysql /etc/php /usr/local/lib/android /opt/ghc
-        sudo -E apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* adoptopenjdk* mysql* php* mongodb* dotnet* moby* snapd* || true
+        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
         sudo -E apt-get -qq update
-        sudo -E apt-get -qq install $(curl -fsSL https://is.gd/depends_ubuntu_2204)
+        sudo -E apt-get -qq install $(curl -fsSL is.gd/depends_ubuntu_2204)
         sudo -E apt-get -qq autoremove --purge
         sudo -E apt-get -qq clean
         sudo timedatectl set-timezone "$TZ"
         sudo mkdir -p /workdir
         sudo chown $USER:$GROUPS /workdir
-        df -Th
 
     - name: Clone source code
       working-directory: /workdir
@@ -96,8 +93,7 @@ jobs:
         echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
 
     - name: Check space usage
-      if: (!cancelled())
-      run: df -Th
+      run: df -hT
 
     - name: Upload bin directory
       uses: actions/upload-artifact@main
@@ -108,7 +104,7 @@ jobs:
 
     - name: Organize files
       id: organize
-      if: steps.compile.outputs.status == 'success' && !cancelled()
+      if: steps.compile.outputs.status == 'success'
       run: |
         cp openwrt/.config build.config
         mkdir -p Packages
@@ -124,14 +120,14 @@ jobs:
 
     - name: Upload firmware directory
       uses: actions/upload-artifact@main
-      if: steps.organize.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
+      if: steps.organize.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true'
       with:
         name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: ${{ env.FIRMWARE }}
 
     - name: Upload firmware to release
-      uses: ncipollo/release-action@v1
-      if: steps.organize.outputs.status == 'success' && env.UPLOAD_RELEASE == 'true' && !cancelled()
+      uses: ncipollo/release-action@main
+      if: steps.organize.outputs.status == 'success' && env.UPLOAD_RELEASE == 'true'
       with:
         name: R${{ env.DATE }} for ${{ env.FILE_NAME }}
         artifacts: ${{ env.FIRMWARE }}/*
@@ -147,7 +143,7 @@ jobs:
 
     - name: Package armvirt as openwrt
       uses: unifreq/openwrt_packit@master
-      if: steps.organize.outputs.status == 'success' && !cancelled()
+      if: steps.organize.outputs.status == 'success'
       env:
         OPENWRT_ARMVIRT: lean/*/*/*rootfs.tar.gz
         PACKAGE_SOC: all
@@ -156,9 +152,15 @@ jobs:
         KERNEL_AUTO_LATEST: true
         GZIP_IMGS: .gz
 
+    - name: Upload openwrt to actions
+      uses: kittaakos/upload-artifact-as-is@master
+      if: env.PACKAGED_STATUS == 'success' && env.UPLOAD_FIRMWARE == 'true'
+      with:
+        path: ${{ env.PACKAGED_OUTPUTPATH }}
+
     - name: Upload openwrt to release
-      uses: ncipollo/release-action@v1
-      if: env.PACKAGED_STATUS == 'success' && !cancelled()
+      uses: ncipollo/release-action@main
+      if: env.PACKAGED_STATUS == 'success' && env.UPLOAD_RELEASE == 'true'
       with:
         name: R${{ env.DATE }} for ${{ env.PRODUCT_NAME }}
         artifacts: ${{ env.PACKAGED_OUTPUTPATH }}/*
