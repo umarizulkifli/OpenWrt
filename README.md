@@ -25,7 +25,7 @@
 
 ## 固件特色 [![](https://img.shields.io/badge/-本项目固件特色-FFFFFF.svg)](#固件特色-)
 1. 固件每天定时自动编译，以确保获得最新体验
-2. 集成绝大多数有线、无线、3G / 4G 网卡驱动
+2. 集成部分常用有线、无线、3G / 4G 网卡驱动
 3. 集成中文版 netdata 实时监控插件，小白也能轻松看懂系统概况
 4. 集成 iStore 应用商店，可根据自己需求自由安装所需插件
 5. 集成 Docker 服务，可在 OpenWrt 内自由部署 Docker 应用
@@ -47,15 +47,7 @@
 
 
 ## 近期更新 [![](https://img.shields.io/badge/-近期固件更新-FFFFFF.svg)](#近期更新-)
-- 2022-10-27：添加新设备 `小马 M68S` 固件编译
-- 2022-10-22：添加新设备 `HinLink H68K` 固件编译
-- 2022-09-24：添加 luci-app-wizard 设置向导插件
-- 2022-09-14：添加新设备 `电犀牛 R66S R68S` 固件编译
-- 2022-09-12：添加 luci-app-onliner 在线用户插件
-- 2022-09-08：添加新设备 `树莓派 3B/3B+` 固件编译
-- 2022-09-06：添加新设备 `树莓派 4B` 固件编译
-- 2022-09-06：添加新设备 `香橙派 R1 Plus` 固件编译
-- 2022-09-04：添加新设备 `友善 R5S` 固件编译
+🤣努力修复中……
 
 
 ## 插件预览 [![](https://img.shields.io/badge/-固件插件及功能预览-FFFFFF.svg)](#插件预览-)
@@ -83,8 +75,8 @@
 　├── 内核日志<br/>
 　├── 系统进程<br/>
 　├── 实时信息<br/>
-　├── 在线用户<br/>
 　├── 实时监控<br/>
+　├── 在线用户<br/>
 　├── WireGuard 状态<br/>
 　├── 负载均衡<br/>
 　└── 释放内存
@@ -113,11 +105,9 @@
 　├── PassWall2<br/>
 　├── Hello World<br/>
 　├── iKoolProxy 滤广告<br/>
-　├── Bypass<br/>
 　├── 广告屏蔽大师 Plus+<br/>
 　├── AdGuard Home<br/>
 　├── ShadowSocksR Plus+<br/>
-　├── DDNSTO 远程控制<br/>
 　├── 应用过滤<br/>
 　├── 微信推送<br/>
 　├── 上网时间控制<br/>
@@ -156,10 +146,10 @@
 　├── 可道云<br/>
 　├── NFS 管理<br/>
 　├── 微力同步<br/>
+　├── Alist 文件列表<br/>
 　├── qBittorrent<br/>
 　├── USB 打印服务器<br/>
 　├── 硬盘休眠<br/>
-　├── aMule设置<br/>
 　├── 挂载 SMB 网络共享<br/>
 　├── 网络共享<br/>
 　├── FTP 服务器<br/>
@@ -200,7 +190,7 @@
 　├── 配置<br/>
 　├── 备份<br/>
 　├── 网速监控<br/>
-　└── 流量监控
+　└── 实时流量监测
 </details>
 　└── <b>退出</b>
 </details>
@@ -223,7 +213,13 @@
    ```bash
    sudo apt update -y
    sudo apt full-upgrade -y
-   sudo apt install -y ack antlr3 asciidoc autoconf automake autopoint binutils bison build-essential bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext gcc-multilib g++-multilib git gperf haveged help2man intltool libc6-dev-i386 libelf-dev libglib2.0-dev libgmp3-dev libltdl-dev libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libreadline-dev libssl-dev libtool lrzsz mkisofs msmtp nano ninja-build p7zip p7zip-full patch pkgconf python2.7 python3 python3-pip libpython3-dev qemu-utils rsync scons squashfs-tools subversion swig texinfo uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev
+   sudo apt install -y ack antlr3 asciidoc autoconf automake autopoint binutils bison build-essential \
+   bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext gcc-multilib g++-multilib \
+   git gperf haveged help2man intltool libc6-dev-i386 libelf-dev libglib2.0-dev libgmp3-dev libltdl-dev \
+   libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libreadline-dev libssl-dev libtool lrzsz \
+   mkisofs msmtp nano ninja-build p7zip p7zip-full patch pkgconf python2.7 python3 python3-pyelftools \
+   libpython3-dev qemu-utils rsync scons squashfs-tools subversion swig texinfo uglifyjs upx-ucl unzip \
+   vim wget xmlto xxd zlib1g-dev
    ```
 
 3. 下载源代码，更新 feeds 并安装到本地
